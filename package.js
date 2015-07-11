@@ -1,38 +1,66 @@
 Package.describe({
-    summary: "Simple shopping cart core.",
+    summary: "Stripe marketplace integration for meteor.",
     name: "elevatedevdesign:stripe-marketplace",
   	version: "0.0.1-rc.1",
-    git: "https://github.com/elevatedevdesign/meteor-cart-core.git"
+    git: "https://github.com/elevatedevdesign/meteor-stripe-marketplace.git"
 });
 
 Package.on_use(function (api) {
-	api.versionsFrom("METEOR@1.0");
+	api.versionsFrom("METEOR@1.1.0.2");
 	
   api.use([
+    "accounts-base",
     'aldeed:simple-schema@1.3.3',
     'aldeed:collection2@2.3.3',
     'benjick:stripe@3.3.4',
     'jeffpatzer:jquery-payment@0.0.5',
     'peppelg:on-login-logout@1.0.0',
-    'elevatedevdesign:autoform-jquery-payments@0.0.2'
+    'elevatedevdesign:autoform-jquery-payments@0.0.2',
+    'mongo',
+    'underscore'
   ],['client','server']);
+ 
+
+  api.add_files([
+      'marketBase.js',
+      'stripeState.js',
+      'schemas/charge.js',
+      'schemas/marketProfile.js'
+    ],['client','server']
+  );
   
   api.add_files([
-      'init.js',
-      'finalize.js'
-    ],
-    ['client','server']
+      'client/init.js',
+      'client/stripeState.js',
+      'schemas/creditCard.js',
+      'schemas/bankAccount.js'
+    ],['client']
   );
   
-  api.add_files(
-    'client/init.js',
-    ['client']
-  );
-  
-  api.add_files(
+  api.add_files([
     'server/init.js',
-    ['server']
+    'server/charges.js',
+    'server/stripeState.js',
+    ],['server']
+  );
+  
+  api.add_files([
+      'expose.js'
+    ],['client','server']
   );
 
-  api.export('Stripe', ['client','server']);
+  api.export('Market', ['client','server']);
+});
+
+Package.onTest(function(api) {
+  api.use('sanjo:jasmine@0.14.0');
+  api.use('velocity:core');
+  api.use('velocity:html-reporter@0.6.2');
+  api.use('pstuart2:velocity-notify@0.0.5');
+  api.use('accounts-password');
+  api.use('elevatedevdesign:stripe-marketplace@0.0.1-rc.1');
+  api.addFiles(['tests/jasmine/server/unit/checkout-spec.js'], 'server');
+  api.addFiles(['tests/jasmine/server/unit/charge-spec.js'], 'server');
+  api.addFiles(['tests/jasmine/server/integration/charge-spec.js'], 'server');
+  api.addFiles(['tests/fixtures.js'], 'server');
 });

@@ -1,3 +1,3 @@
 Meteor.publish("marketplace/state",function(){
-  return StripeState.find({'userId': this.userId});
+  return Market._stateCollection.find({'userId': this.userId},{fields: {'customerId': 0, 'accountId': 0}});
 });

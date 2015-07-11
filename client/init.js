@@ -1,3 +1,4 @@
 Meteor.startup(function() {
-  Stripe.setPublishableKey( Meteor.settings.public.stripe.PUBLISHABLE_KEY );
+  // not sure why window is necessary
+  window.Stripe.setPublishableKey( Meteor.settings.public.Stripe.publicKey );
 });

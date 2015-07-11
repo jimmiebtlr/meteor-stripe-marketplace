@@ -1,12 +1,12 @@
 var subscription;
-StripeMarketplaceImplementation.prototype._onLogin = function(){
+StripeMarketplaceImplementation.prototype._onLogin.push(function(){
   subscription = Meteor.subscribe("marketplace/state");
-};
+});
 
-StripeMarketplaceImplementation.prototype._onLogout = function(){
+StripeMarketplaceImplementation.prototype._onLogout.push( function(){
   subscription.stop();
-};
+});
 
 StripeMarketplaceImplementation.prototype.state = function(){
-  return StripeState.findOne({'userId': Meteor.userId()});
+  return this._stateCollection.findOne({'userId': Meteor.userId()});
 };

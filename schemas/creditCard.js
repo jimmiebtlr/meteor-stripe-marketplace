@@ -1,26 +1,25 @@
-StripeMarketplaceImplementation.creditCardSchema = new SimpleSchema({
-  card_number: {
+StripeMarketplaceImplementation.prototype.creditCardSchema = new SimpleSchema({
+  number: {
     type: String,
+    label: "Card Number",
     autoform: {
       type: 'payments/creditCard'
     },
-    custom: function(){
-    }
+    custom: PaymentsHelpers.CreditCardValidation 
   },
   cvc: {
     type: String,
     autoform: {
       type: 'payments/creditCardCVC'
     },
-    custom: function(){
-    }
+    custom: PaymentsHelpers.CVCValidation 
   },
   expiry: {
     type: String,
     autoform: {
-      type: 'payments/creditCardExpiry'
+      type: 'payments/creditCardExpiry',
+      placeholder: "MM / YY"
     },
-    custom: function(){
-    }
+    custom: PaymentsHelpers.CCExpiryValidation 
   }
 });

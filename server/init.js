@@ -1,4 +1,6 @@
-StripeMarketplaceImplementation.prototype._stripe = StripeAPI(Meteor.settings.Stripe.secretKey); 
+Stripe = StripeAPI(Meteor.settings.Stripe.secretKey); 
+StripeMarketplaceImplementation.prototype._stripe = Stripe;
+
 /*
  * Setup creation of customer and account records for users on create and login
  */
@@ -8,7 +10,7 @@ var createStripeState = function(userId){
 
   stripeStateId = Market._stateCollection.insert({'userId': userId});
 
-  Market._stripe.customers.create({
+  Stripe.customers.create({
     metadata: {
       userId: userId
     }
@@ -23,7 +25,7 @@ var createStripeState = function(userId){
     }
   }));
 
-  Market._stripe.accounts.create({
+  Stripe.accounts.create({
     managed: true,
     country: "US"
   },Meteor.bindEnvironment(function(err,account){

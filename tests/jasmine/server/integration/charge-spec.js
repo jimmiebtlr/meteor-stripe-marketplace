@@ -1,7 +1,7 @@
 /*
  * Important note: These will fail if you haven't setup you're settings correctly yet
  */
-describe("Market.charge/stripe integration",function(){
+xdescribe("Market.charge/stripe integration",function(){
   it("should be successful",function(done){
     // Create both users
     var userId = Accounts.createUser({'email': "user@test.com"});

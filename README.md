@@ -54,3 +54,7 @@ In the package directory run
 
 # TODO
 * Improve Readme
+* Add webhook listener
+* Add methods to manage credit cards
+* Add methods to manage bank accounts
+* Is there a better way to handle query of bank accounts and credit cards?

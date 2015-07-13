@@ -8,10 +8,13 @@ StripeMarketplaceImplementation = function(){
   });
 
   this._settings = {};
+  this._tmpStore = new ReactiveDict();
+
   if( Meteor.isServer ){
     Meteor.methods( this._methods );
     this._onCustomerCreateCallbacks = [];
     this._onAccountCreateCallbacks = [];
+
   }
 };
 

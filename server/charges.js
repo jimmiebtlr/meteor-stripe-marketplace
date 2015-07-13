@@ -29,7 +29,7 @@ StripeMarketplaceImplementation.prototype.charge = function(charge, callback){
   };
 
   check( stripeCharge, Market._schemas.stripeCharge );
-  this._stripe.charges.create( stripeCharge,function(err,result){
+  Stripe.charges.create( stripeCharge,function(err,result){
     if( err ){
       if( Market._settings.checkout.onError ){
         Market._settings.checkout.onError( err, charge, result );

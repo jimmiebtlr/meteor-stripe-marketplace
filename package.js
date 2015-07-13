@@ -15,9 +15,10 @@ Package.on_use(function (api) {
     'benjick:stripe@3.3.4',
     'jeffpatzer:jquery-payment@0.0.5',
     'peppelg:on-login-logout@1.0.0',
-    'elevatedevdesign:autoform-jquery-payments@0.0.2',
+    'elevatedevdesign:autoform-jquery-payments@0.0.5',
     'mongo',
-    'underscore'
+    'underscore',
+    'reactive-dict'
   ],['client','server']);
  
 
@@ -33,7 +34,9 @@ Package.on_use(function (api) {
       'client/init.js',
       'client/stripeState.js',
       'schemas/creditCard.js',
-      'schemas/bankAccount.js'
+      'schemas/bankAccount.js',
+      'client/customer.js',
+      'client/account.js',
     ],['client']
   );
   
@@ -41,6 +44,7 @@ Package.on_use(function (api) {
     'server/init.js',
     'server/charges.js',
     'server/stripeState.js',
+    'server/customer.js',
     ],['server']
   );
   

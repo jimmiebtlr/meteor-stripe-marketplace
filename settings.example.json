@@ -1,0 +1,10 @@
+{
+  "public" : {
+    "Stripe" : {
+      "publicKey" : "public_key"
+    }
+  },
+  "Stripe" : {
+    "secretKey" : "secret_key"
+  }
+}

@@ -1,4 +1,8 @@
 StripeMarketplaceImplementation.prototype.creditCardSchema = new SimpleSchema({
+  name: {
+    type: String,
+    label: "Name on card"
+  },
   number: {
     type: String,
     label: "Card Number",

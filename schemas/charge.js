@@ -1,4 +1,4 @@
-/* 
+/*
  * Checkout
  * Params
  *   Expected Amount
@@ -20,9 +20,14 @@ StripeMarketplaceImplementation.prototype._schemas.charge = new SimpleSchema({
     type: Number,
     optional: true,
     min: 0
+  },
+  itemType: {
+    type: String
+  },
+  itemId: {
+    type: SimpleSchema.RegEx.ID
   }
 });
-
 
 StripeMarketplaceImplementation.prototype._schemas.stripeCharge = new SimpleSchema({
   customer: {  // USer Id of the person getting charged

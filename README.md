@@ -31,6 +31,12 @@ Where charges returns an object of the format
         type: Number,
         optional: true,
         min: 0
+      },
+      itemType: {  // These are used for purchase history
+        type: String
+      },
+      itemId: {
+        type: SimpleSchema.RegEx.ID
       }
 
 ### settings file
@@ -46,6 +52,15 @@ Where charges returns an object of the format
       }
     }
 
+# Purchase History
+We track users purchase history for them.  This is based on the values for itemType and itemId from the charges function. It is located at 
+
+    Market.PurchaseHistory  // Mongo collection
+
+We also provide a few helper methods 
+ 
+    Market.PurchaseHistory.purchased( userId, type, id ); // True or False
+
 # Testing
 
 In the package directory run 
@@ -58,3 +73,5 @@ In the package directory run
 * Add methods to manage credit cards
 * Add methods to manage bank accounts
 * Is there a better way to handle query of bank accounts and credit cards?
+* Split into core and stripe?
+* There is no rhyme or reason to the load order.

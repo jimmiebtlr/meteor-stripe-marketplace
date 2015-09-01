@@ -9060,7 +9060,7 @@ var packageMetadata = {
       }
     }
   },
-  "elevatedevdesign:stripe-marketplace": {
+  "elevatedevdesign:stripe-market": {
     "Market": {
       "type": "object",
       "members": {

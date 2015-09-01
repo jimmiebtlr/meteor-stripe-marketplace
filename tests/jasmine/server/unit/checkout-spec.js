@@ -1,4 +1,4 @@
-describe('\'marketplace/checkout\' meteor method', function() {
+describe('\'market/checkout\' meteor method', function() {
   var params;
   beforeEach(function() {
     // Default all to a valid config
@@ -52,7 +52,7 @@ describe('\'marketplace/checkout\' meteor method', function() {
       ];}, onError: function() {}}});
 
       expect(function() {
-        Market._methods['marketplace/checkout'](params);
+        Market._methods['market/checkout'](params);
       }).not.toThrow();
 
       expect(Market._charge).toHaveBeenCalled();
@@ -65,7 +65,7 @@ describe('\'marketplace/checkout\' meteor method', function() {
     function() {
       Market._settings = {};
       expect(function() {
-        Market._methods['marketplace/checkout'](params);
+        Market._methods['market/checkout'](params);
       }).toThrow(new Meteor.Error('Market settings for checkout not found'));
 
       expect(Market._charge).not.toHaveBeenCalled();
@@ -74,7 +74,7 @@ describe('\'marketplace/checkout\' meteor method', function() {
 
   it('should throw an error if called with invalid parameters',function() {
     expect(function() {
-      Market._methods['marketplace/checkout']({});
+      Market._methods['market/checkout']({});
     }).toThrow();
 
     expect(Market._charge).not.toHaveBeenCalled();
@@ -83,7 +83,7 @@ describe('\'marketplace/checkout\' meteor method', function() {
   it('should throw an error if user is not logged in',function() {
     Market._methods.userId = undefined;
     expect(function() {
-      Market._methods['marketplace/checkout'](params);
+      Market._methods['market/checkout'](params);
     }).toThrow();
 
     expect(Market._charge).not.toHaveBeenCalled();
@@ -101,7 +101,7 @@ describe('\'marketplace/checkout\' meteor method', function() {
       });
 
       expect(function() {
-        Market._methods['marketplace/checkout'](params);
+        Market._methods['market/checkout'](params);
       }).toThrow();
 
       expect(Market._charge).not.toHaveBeenCalled();

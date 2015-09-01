@@ -68,10 +68,10 @@ In the package directory run
     ./test.sh
 
 # TODO
+* Make initialization and load order better
 * Improve Readme
 * Add webhook listener
 * Add methods to manage credit cards
 * Add methods to manage bank accounts
 * Is there a better way to handle query of bank accounts and credit cards?
 * Split into core and stripe?
-* There is no rhyme or reason to the load order.

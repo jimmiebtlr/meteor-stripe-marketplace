@@ -5,7 +5,7 @@
  *  OnError
  *  Cost
  */
-StripeMarketplaceImplementation.prototype._schemas.profile = new SimpleSchema({
+Market.schemas.profile = new SimpleSchema({
   type: {
     type: String
   },

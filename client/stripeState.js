@@ -1,12 +1,13 @@
 var subscription;
-StripeMarketplaceImplementation.prototype._onLogin.push(function(){
-  subscription = Meteor.subscribe("marketplace/state");
+Accounts.onLogin(function(){
+  subscription = Meteor.subscribe("market/state");
 });
 
-StripeMarketplaceImplementation.prototype._onLogout.push( function(){
+Accounts.onLogout(function(){
   subscription.stop();
 });
 
-StripeMarketplaceImplementation.prototype.state = function(){
+
+Market.state = function(){
   return this._stateCollection.findOne({'userId': Meteor.userId()});
 };

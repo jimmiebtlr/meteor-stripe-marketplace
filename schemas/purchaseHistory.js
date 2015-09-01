@@ -1,4 +1,4 @@
-PurchaseHistoryLineItem = new SimpleSchema({
+Market.schemas.PurchaseHistoryLineItem = new SimpleSchema({
   destinationId: {  // UserId of the person who is receiving the credit
     type: SimpleSchema.RegEx.ID
   },
@@ -28,9 +28,9 @@ PurchaseHistoryLineItem = new SimpleSchema({
   }
 });
 
-PurchaseHistorySchema = new SimpleSchema({
+Market.schemas.PurchaseHistorySchema = new SimpleSchema({
   charges: {
-    type: [PurchaseHistoryLineItem],
+    type: [Market.schemas.PurchaseHistoryLineItem],
     defaultValue: []
   },
   total: {
@@ -42,7 +42,8 @@ PurchaseHistorySchema = new SimpleSchema({
 });
 
 Market.PurchaseHistory = new Mongo.Collection('purchaseHistory');
-Market.PurchaseHistory.attachSchema(PurchaseHistorySchema);
+Market.PurchaseHistory.attachSchema(Market.schemas.PurchaseHistorySchema);
+Market.PurchaseHistory.attachBehaviour('timestampable');
 
 Market.PurchaseHistory.purchased = function(userId, type, id) {
   var purchased = !!Market.PurchaseHistory.findOne({

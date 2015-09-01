@@ -1,4 +1,4 @@
-StripeMarketplaceImplementation.prototype.creditCardSchema = new SimpleSchema({
+Market.schemas.creditCard = new SimpleSchema({
   name: {
     type: String,
     label: "Name on card"

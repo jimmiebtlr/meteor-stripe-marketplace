@@ -1,9 +1,11 @@
-StripeMarketplaceImplementation.bankAccountSchema = new SimpleSchema({
+Market.schemas.bankAccount = new SimpleSchema({
   country: {
-    type: String
+    type: String,
+    defaultValue: "US"
   },
   currency: {
-    type: String
+    type: String,
+    defaultValue: "usd"
   },
   routing_number: {
     type: String

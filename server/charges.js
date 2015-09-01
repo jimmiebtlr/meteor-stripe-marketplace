@@ -1,4 +1,4 @@
-checkoutMethodSchema = new SimpleSchema({
+Market.schemas.checkoutMethod = new SimpleSchema({
   expectedTotal: {
     type: Number
   },
@@ -12,8 +12,8 @@ checkoutMethodSchema = new SimpleSchema({
 });
 
 // Does not save purchase history.  Only for internal use.
-StripeMarketplaceImplementation.prototype._charge = function(charge, callback) {
-  check(charge, this._schemas.charge);
+Market._charge = function(charge, callback) {
+  check(charge, this.schemas.charge);
 
   var userState = this._stateCollection.findOne({'userId': charge.userId});
   if (!userState || !userState.customerId) {
@@ -35,7 +35,7 @@ StripeMarketplaceImplementation.prototype._charge = function(charge, callback) {
     currency: 'usd'
   };
 
-  check(stripeCharge, Market._schemas.stripeCharge);
+  check(stripeCharge, Market.schemas.stripeCharge);
   Stripe.charges.create(
     stripeCharge,
     Meteor.bindEnvironment(function(err, result) {
@@ -46,6 +46,7 @@ StripeMarketplaceImplementation.prototype._charge = function(charge, callback) {
         if (callback) { callback(err, charge, result); }
       }else {
         if (Market._settings.checkout.onSuccess) {
+          console.log( "checkout onSuccess" );
           Market._settings.checkout.onSuccess(charge, result);
         }
         if (callback) { callback(err, charge, result); }
@@ -54,15 +55,15 @@ StripeMarketplaceImplementation.prototype._charge = function(charge, callback) {
   );
 };
 
-StripeMarketplaceImplementation.prototype._methods['marketplace/checkout'] =
+Market._methods['market/checkout'] =
 function(params) {
-  check(params, checkoutMethodSchema);
+  check(params, Market.schemas.checkoutMethod);
   check(this.userId, String);
   var userId = this.userId;
   var profile = Market._settings.checkout;
   if (profile) {
     var charges = profile.charges(params.id);
-    check(charges, [Market._schemas.charge]);
+    check(charges, [Market.schemas.charge]);
     var actualTotal = 0;
     _.each(charges, function(c) { actualTotal += c.amount; });
 
@@ -108,3 +109,6 @@ function(params) {
     throw new Meteor.Error('Market settings for checkout not found');
   }
 };
+Meteor.methods({
+  'market/checkout': Market._methods['market/checkout']
+});

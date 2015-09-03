@@ -46,7 +46,6 @@ Market._charge = function(charge, callback) {
         if (callback) { callback(err, charge, result); }
       }else {
         if (Market._settings.checkout.onSuccess) {
-          console.log( "checkout onSuccess" );
           Market._settings.checkout.onSuccess(charge, result);
         }
         if (callback) { callback(err, charge, result); }

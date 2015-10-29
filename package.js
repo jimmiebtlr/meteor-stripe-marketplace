@@ -1,6 +1,6 @@
 Package.describe({
   summary: 'Stripe market integration for meteor.',
-  name: 'elevatedevdesign:stripe-marketplace',
+  name: 'jimmiebtlr:stripe-marketplace',
   version: '0.0.1-rc.1',
   git: 'https://github.com/elevatedevdesign/meteor-stripe-market.git'
 });
@@ -16,6 +16,7 @@ Package.onUse(function(api) {
     'peppelg:on-login-logout@1.0.0',
     'elevatedevdesign:autoform-jquery-payments@0.0.5', // Can this be done in the UI package?
     'mongo',
+    'ecmascript',
     'underscore',
     'reactive-dict',
     'zimme:collection-timestampable@1.0.9'
@@ -28,8 +29,8 @@ Package.onUse(function(api) {
   api.addFiles([
       'schemas/charge.js',
       'schemas/marketProfile.js',
-      'schemas/marketProfile.js',
       'schemas/purchaseHistory.js',
+      'schemas/userInfo.js',
       'schemas/stripeState.js',
     ],['client','server']
   );
@@ -41,7 +42,7 @@ Package.onUse(function(api) {
       'client/account.js',
 
       // These should only be used on the client so make it so
-      'schemas/creditCard.js',  
+      'schemas/creditCard.js',
       'schemas/bankAccount.js',
     ],['client']
   );
@@ -55,6 +56,7 @@ Package.onUse(function(api) {
     'server/customer.js',
     'server/account.js',
     'server/purchaseHistory.js',
+    'server/userInfo.js',
     ],['server']
   );
 
@@ -68,7 +70,7 @@ Package.onTest(function(api) {
   api.use('velocity:html-reporter@0.8.2');
   api.use('pstuart2:velocity-notify@0.0.5');
   api.use('accounts-password');
-  api.use('elevatedevdesign:stripe-marketplace@0.0.1-rc.1');
+  api.use('jimmiebtlr:stripe-marketplace@0.0.1-rc.1');
   api.use('benjick:stripe@3.3.4');
 
   api.addFiles([

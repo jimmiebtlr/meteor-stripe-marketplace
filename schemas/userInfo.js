@@ -91,10 +91,10 @@ if( Meteor.isServer ){
       doc.dob.day = dob.format("DD")
       doc.dob.month = dob.format("MM")
       doc.dob.year = dob.format("YYYY")
-      console.log( _.omit(doc,'userId','_id','country') )
+
       Stripe.accounts.update(
         state.accountId, {
-          legal_entity: _.omit(doc,'userId','_id','country')
+          legal_entity: _.omit(doc,'userId','_id','country'),
         }
       )
     }else{

@@ -12,7 +12,7 @@ Market._methods["market/accounts/createExternalAccount"] = function(token){
   check( this.userId, String );
 
   var state = Market._stateCollection.findOne({'userId': this.userId});
-  
+
   return syncCreateExtAccount( state.accountId, {external_account: token} );
 };
 
@@ -28,7 +28,7 @@ Market._methods["market/accounts/updateExternalAccount"] = function(bankAccountI
   check( this.userId, String );
 
   var state = Market._stateCollection.findOne({'userId': this.userId});
-  
+
   return syncUpdateExternalAccount( state.accountId, bankAccountId, updateReq );
 };
 
@@ -38,7 +38,7 @@ Market._methods["market/accounts/deleteExternalAccount"] = function(bankAccountI
   check( this.userId, String );
 
   var state = Market._stateCollection.findOne({'userId': this.userId});
-  
+
   return syncDeleteExternalAccount( state.accountId, bankAccountId );
 };
 
@@ -55,16 +55,10 @@ Market._methods["market/accounts/acceptTOS"] = function(  ){
     ip: self.connection.clientAddress
   };
   check( tos_acceptance, Market.schemas.stripeTOS );
+  Market._stateCollection.update({'userId': self.userId},{$set: {tosAcceptance: true}});
 
-  Stripe.accounts.update( 
-    state.accountId,{
-      tos_acceptance: tos_acceptance
-    },Meteor.bindEnvironment(function(){
-      // TODO should this be moved into something that can provide latency compensation?
-      Market._stateCollection.update({'userId': self.userId},{$set: {tosAcceptance: true}});
-    })
-  );
-};
+  Stripe.accounts.update( state.accountId, { tos_acceptance: tos_acceptance })
+}
 
 Meteor.methods({
   "market/accounts/createExternalAccount": Market._methods["market/accounts/createExternalAccount"],

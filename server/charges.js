@@ -12,6 +12,7 @@ Market.schemas.checkoutMethod = new SimpleSchema({
 });
 
 // Does not save purchase history.  Only for internal use.
+let syncChargeCreate = Meteor.wrapAsync( Stripe.charges.create, Stripe.charges );
 Market._charge = function(charge, callback) {
   check(charge, this.schemas.charge);
 
@@ -36,22 +37,19 @@ Market._charge = function(charge, callback) {
   };
 
   check(stripeCharge, Market.schemas.stripeCharge);
-  Stripe.charges.create(
-    stripeCharge,
-    Meteor.bindEnvironment(function(err, result) {
-      if (err) {
-        if (Market._settings.checkout.onError) {
-          Market._settings.checkout.onError(err, charge, result);
-        }
-        if (callback) { callback(err, charge, result); }
-      }else {
-        if (Market._settings.checkout.onSuccess) {
-          Market._settings.checkout.onSuccess(charge, result);
-        }
-        if (callback) { callback(err, charge, result); }
-      }
-    })
-  );
+  try{
+    let result = syncChargeCreate( stripeCharge )
+
+    if (Market._settings.checkout.onSuccess) {
+      Market._settings.checkout.onSuccess(charge, result);
+    }
+    if (callback) { callback(undefined, charge, result); }
+  }catch(e){
+    if (Market._settings.checkout.onError) {
+      Market._settings.checkout.onError(e, charge);
+    }
+    if (callback) { callback(e, charge ); }
+  }
 };
 
 Market._methods['market/checkout'] =
@@ -81,17 +79,18 @@ function(params) {
               modifier.$push.charges.purchaseStatus = 'Success';
               Market.PurchaseHistory.update({_id: purchaseHistoryId}, modifier);
             }else {
-              modifier.purchaseStatus = 'Error';
-              Market.$push.charges.PurchaseHistory.update(
+              modifier.$push.charges.purchaseStatus = 'Error';
+              Market.PurchaseHistory.update(
                 {_id: purchaseHistoryId},
                 modifier
               );
+              throw err
             }
           });
         });
       }catch (e) {
         profile.onError(e);
-        throw e;
+        throw new Meteor.Error(e.type, e.message);
       }
     }else {
       var error = new Meteor.Error(

@@ -32,3 +32,11 @@ Market.schemas.stripeStateSchema = new SimpleSchema({
 
 Market._stateCollection = new Mongo.Collection("stripeMarketplaceState");
 Market._stateCollection.attachSchema( Market.schemas.stripeStateSchema );
+
+if( Meteor.isClient ){
+  Market._stateCollection.helpers({
+    canAcceptPayments(){
+      return this.tosAcceptance
+    }
+  })
+}

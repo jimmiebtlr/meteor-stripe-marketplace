@@ -12,7 +12,7 @@ Package.onUse(function(api) {
     'accounts-base',
     'aldeed:simple-schema@1.3.3',
     'aldeed:collection2@2.3.3',
-    'benjick:stripe@3.6.0',
+    'benjick:stripe@4.0.0',
     'peppelg:on-login-logout@1.0.0',
     'elevatedevdesign:autoform-jquery-payments@0.0.5', // Can this be done in the UI package?
     'mongo',
@@ -21,6 +21,10 @@ Package.onUse(function(api) {
     'reactive-dict',
     'zimme:collection-timestampable@1.0.9'
   ],['client','server']);
+
+  api.use([
+    'gadicohen:headers@0.0.31'
+  ],'server');
 
   api.addFiles([
     'lib/market.js'

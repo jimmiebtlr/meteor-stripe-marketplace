@@ -4,8 +4,12 @@ Market._methods["market/customer/createSource"] = function(token){
   check( this.userId, String );
 
   var state = Market._stateCollection.findOne({'userId': this.userId});
-  
-  return syncCreateSource( state.customerId, {source: token} );
+
+  try{
+    return syncCreateSource( state.customerId, {source: token} )
+  }catch(e){
+    throw new Meteor.Error("create-source-failed", e.message);
+  }
 };
 
 var syncCardRemove = Meteor.wrapAsync( Stripe.customers.deleteCard, Stripe.customers );
@@ -14,7 +18,7 @@ Market._methods["market/customer/cards/remove"] = function(id){
   check( this.userId, String );
 
   var state = Market._stateCollection.findOne({'userId': this.userId});
-  
+
   return syncCardRemove( state.customerId, id );
 };
 

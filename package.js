@@ -75,7 +75,7 @@ Package.onTest(function(api) {
   api.use('pstuart2:velocity-notify@0.0.5');
   api.use('accounts-password');
   api.use('jimmiebtlr:stripe-marketplace@0.0.1-rc.1');
-  api.use('benjick:stripe@3.3.4');
+  api.use('benjick:stripe@4.1.0');
 
   api.addFiles([
     'tests/jasmine/server/unit/checkout-spec.js',

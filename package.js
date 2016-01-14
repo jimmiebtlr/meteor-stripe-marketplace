@@ -1,7 +1,7 @@
 Package.describe({
   summary: 'Stripe market integration for meteor.',
   name: 'jimmiebtlr:stripe-marketplace',
-  version: '0.0.1-rc.1',
+  version: '0.0.1',
   git: 'https://github.com/elevatedevdesign/meteor-stripe-market.git'
 });
 
